@@ -1,13 +1,5 @@
 name: CI
 on:
-  pull_request:
-    branches:
-    - main
-  push:
-    branches:
-    - main
-    tags:
-    - '*'
   workflow_dispatch:
 
 concurrency:
@@ -21,8 +13,6 @@ jobs:
       fail-fast: false
       matrix:
         version:
-          - '1.6'
-          - '1'
           - 'nightly'
         os:
           - ubuntu-latest
