@@ -1,23 +1,23 @@
-# C++调用Julia
+# C++ Calling Julia
 
-TyJuliaCAPI是同元M语言调用Julia的底层技术，它也支持C++调用Julia。
+TyJuliaCAPI is the underlying technology used by the TongYuan M Language to call Julia, and it also supports calling Julia from C++.
 
-与`julia.h`不同，TyJuliaCAPI提供一套**长期稳定**的C API，其中涉及的数据结构和函数签名不会随着Julia版本升级而发生改变。
+Unlike `julia.h`, TyJuliaCAPI provides a **long-term stable** C API. The data structures and function signatures involved in this API will not change with Julia version upgrades.
 
-## 特性概览
+## Features Overview
 
-1. 不支持跨线程调用Julia C API（现阶段julia.h也不支持）
+1. Cross-thread calls to the Julia C API are not supported (julia.h does not support this at the current stage either).
 
-2. 使用C/C++编写Julia库时，无需包含`julia.h`，只需包含TyJuliaCAPI的两个头文件，且支持静态链接。
+2. When writing a Julia library in C/C++, there is no need to include `julia.h`. You only need to include two header files from TyJuliaCAPI, and it supports static linking.
 
-3. Julia对象的生命周期管理参考CPython Stable C API设计，是业界主流的外部语言调用C语言的对象生命周期管理方式。
+3. The lifecycle management of Julia objects follows the design of the CPython Stable C API, which is the industry-standard approach for managing object lifecycles when calling C code from external languages.
 
-4. API数量少，但功能完备，适合二次开发。
+4. The API is minimal in number but comprehensive in functionality, making it suitable for further development.
 
-## 使用和案例
+## Usage and Examples
 
-C++调用Julia有以下两种目的，分别提供了一个demo进行演示：
+C++ calling Julia serves two main purposes, each of which is demonstrated with a corresponding demo:
 
-1. 构建可执行文件并调用Julia：查看`cpp_examples/cpp-exe-call-julia`
+1. Building an executable and calling Julia: Refer to [cpp-exe-call-julia](./cpp-exe-call-julia).
 
-2. 使用C++编写Julia库，其中调用到Julia，并最终为Julia调用：查看`cpp_examples/cpp-write-jl-lib`
+2. Using C++ to write a Julia library that calls Julia and is ultimately called by Julia: Refer to [cpp-write-jl-lib](./cpp-write-jl-lib).
