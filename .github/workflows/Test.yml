@@ -1,0 +1,39 @@
+name: CI
+on:
+  pull_request:
+    branches:
+    - main
+  push:
+    branches:
+    - main
+    tags:
+    - '*'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
+jobs:
+  test:
+    name: ${{ matrix.OS }} - Julia ${{ matrix.julia-version }} - ${{ github.event_name }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        julia-version: ["1.6", "1.9"]
+        OS: [Ubuntu, macOS, Windows]
+        include:
+          - os: Ubuntu
+            image: ubuntu-22.04
+          - os: Windows
+            image: windows-2022
+          - os: macOS
+            image: macos-12
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v3
+      - uses: julia-actions/setup-julia@v1
+        with:
+          version: ${{ matrix.julia-version }}
+      - uses: julia-actions/cache@v1
+      - uses: julia-actions/julia-buildpkg@v1
+      - uses: julia-actions/julia-runtest@v1
