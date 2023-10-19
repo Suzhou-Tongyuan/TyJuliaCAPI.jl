@@ -7,27 +7,20 @@ concurrency:
   cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
 jobs:
   test:
-    name: Julia ${{ matrix.version }} - ${{ matrix.os }} - ${{ matrix.arch }} - ${{ github.event_name }}
-    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.OS }} - Julia ${{ matrix.julia-version }} - ${{ github.event_name }}
+    runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix:
-        version:
-          - 'nightly'
-        os:
-          - ubuntu-latest
-        arch:
-          - x64
+        julia-version: ["nightly"]
+        OS: [Ubuntu, macOS, Windows]
         include:
-          - os: windows-latest
-            version: '1'
-            arch: x64
-          - os: macOS-latest
-            version: '1'
-            arch: x64
-          - os: ubuntu-latest
-            version: '1'
-            arch: x64
+          - os: Ubuntu
+            image: ubuntu-22.04
+          - os: Windows
+            image: windows-2022
+          - os: macOS
+            image: macos-12
+      fail-fast: false
     steps:
       - uses: actions/checkout@v3
       - uses: julia-actions/setup-julia@v1
