@@ -1,0 +1,7 @@
+Manifest.toml
+julia_bindings.cs
+build/
+.vscode/
+
+cpp_examples/cpp-exe-call-julia/main.exe
+cpp_examples/cpp-write-jl-lib/library.dll
