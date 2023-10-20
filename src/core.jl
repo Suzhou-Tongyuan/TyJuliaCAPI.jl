@@ -71,7 +71,7 @@ end
 function JLEval(out::Ptr{JV}, module′::JV, code::TyList{UInt8})::ErrorCode
     try
         M = module′.ID == 0 ? Main : JV_LOAD(module′)::Module
-        v = Base.eval(M, Meta.parse(unsafe_string(code)))
+        v = Base.eval(M, Meta.parseall(unsafe_string(code)))
         unsafe_store!(out, JV_ALLOC(v))
         return OK
     catch e

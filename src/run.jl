@@ -46,6 +46,22 @@
         @test JSym_LOAD(refSym[1]) == :ErrorException
         @test String(errMsgVec) == "syntax: incomplete: premature end of input"
     end
+
+    s = """
+        if true
+            123
+        else
+            234
+        end
+        345
+        """
+    x = TyList(s)
+    out = [JV()]
+    GC.@preserve s begin
+        @test JLEval(pointer(out), JV(), x) == OK
+        @test JV_LOAD(out[1]) == 345
+        JV_DEALLOC(out[1])
+    end
 end
 
 @testset "JLCall" begin
