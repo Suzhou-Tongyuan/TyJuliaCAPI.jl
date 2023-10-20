@@ -1,7 +1,7 @@
 # TyJuliaCAPI.jl
 
 [![Build Status](https://github.com/Suzhou-Tongyuan/TyJuliaCAPI.jl/actions/workflows/Test.yml/badge.svg?branch=main
-)](https://github.com/Suzhou-Tongyuan/TyJuliaCAPI.jl/actions/workflows/Test.yml?query=branch%3Amain)
+)](https://github.com/Suzhou-Tongyuan/TyJuliaCAPI.jl/actions/workflows/Test.yml?query=branch%3Amain) [![中文文档](https://img.shields.io/badge/%E4%B8%AD%E6%96%87-%E6%96%87%E6%A1%A3-blue.svg)](README_ZH.md)
 
 TyJuliaCAPI.jl provides a stable C API for Julia.
 
