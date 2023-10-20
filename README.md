@@ -1,5 +1,8 @@
 # TyJuliaCAPI.jl
 
+[![Build Status](https://github.com/Suzhou-Tongyuan/TyJuliaCAPI.jl/actions/workflows/Test.yml/badge.svg?branch=main
+)](https://github.com/Suzhou-Tongyuan/TyJuliaCAPI.jl/actions/workflows/Test.yml?query=branch%3Amain)
+
 TyJuliaCAPI.jl provides a stable C API for Julia.
 
 These APIs are provided in the form of function pointers, and there are two initialization methods:

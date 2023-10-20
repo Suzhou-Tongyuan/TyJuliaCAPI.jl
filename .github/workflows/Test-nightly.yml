@@ -1,4 +1,4 @@
-name: CI
+name: Test-Nightly
 on:
   workflow_dispatch:
 
