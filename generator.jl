@@ -133,6 +133,7 @@ end
 cs_binding_path = get(ENV, "CS_BINDING", "")
 cpp_binding_dir = get(ENV, "CPP_BINDING_DIR", "")
 deno_binding_path = get(ENV, "DENO_BINDING", "")
+py_binding_path = get(ENV, "PY_BINDING", "")
 
 if !isempty(cs_binding_path)
     include("bindings/csharp.jl")
@@ -170,6 +171,18 @@ if !isempty(deno_binding_path)
 
     open(deno_binding_path, "w") do io
         for each in gen_deno_api_binding_struct()
+            println(io, each)
+        end
+    end
+end
+
+
+if !isempty(py_binding_path)
+    include("bindings/python.jl")
+
+    open(py_binding_path, "w") do io
+        println(io, "# This file is generated. Do not modify it directly.")
+        for each in gen_py_api_binding_struct()
             println(io, each)
         end
     end
