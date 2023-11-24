@@ -117,7 +117,7 @@ CORE_API ErrorCode JLError_FetchMsgStr(JSym* outExcName, List<char> msgBuffer);
 /* func(args...; kwargs...) -> out */
 CORE_API ErrorCode JLCall(JV* out, JV func, List<JV> args, List<Tuple<JSym, JV>> kwargs);
 /* func.(args...; kwargs...) -> out */
-CORE_API ErrorCode JLDotCall(JV* out, JV func, List<JV> args, List<Tuple<Sym, JV>> kwargs);
+CORE_API ErrorCode JLDotCall(JV* out, JV func, List<JV> args, List<Tuple<JSym, JV>> kwargs);
 
 ErrorCode JLCompare(bool* out, Compare cmp, JV a, JV b);
 ```
