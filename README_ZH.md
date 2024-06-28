@@ -122,7 +122,7 @@ CORE_API ErrorCode JLDotCall(JV* out, JV func, List<JV> args, List<Tuple<JSym, J
 ErrorCode JLCompare(bool* out, Compare cmp, JV a, JV b);
 ```
 
-全量API列表见 [`include/tyjuliacapi.hpp`](https://git.tongyuan.cc/syslab-plg/tyjuliacapi.jl/-/blob/main/include/tyjuliacapi-docs.hpp)
+全量API列表见 [`include/tyjuliacapi.hpp`](./include/tyjuliacapi-docs.hpp)
 
 ## 外部语言binding
 
