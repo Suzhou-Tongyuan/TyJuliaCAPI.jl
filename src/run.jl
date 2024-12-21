@@ -105,6 +105,24 @@ end
     ) == OK
     @test JV_LOAD(out[1]) == myfunc.([1, 2, 3]; b=[5, 2, 8])
     JV_DEALLOC(out[1])
+
+    function myfunc3(a, b, c)
+        return a * b * c
+    end
+    fProxy = JV_ALLOC(myfunc3)
+    arg1Proxy = JV_ALLOC("AAA")
+    arg2Proxy = JV_ALLOC("BCB")
+    arg3Proxy = JV_ALLOC("CCC")
+    out = [JV()]
+    args = [arg1Proxy, arg2Proxy, arg3Proxy]
+    kwargs = Ptr{TyTuple{JSym,JV}}(C_NULL)
+    @test JLCall(pointer(out), fProxy, TyList(3, pointer(args)), TyList(0, kwargs)) == OK
+    @test JV_LOAD(out[1]) == "AAABCBCCC"
+    JV_DEALLOC(out[1])
+    JV_DEALLOC(fProxy)
+    JV_DEALLOC(arg1Proxy)
+    JV_DEALLOC(arg2Proxy)
+    JV_DEALLOC(arg3Proxy)
 end
 
 mutable struct MyVal

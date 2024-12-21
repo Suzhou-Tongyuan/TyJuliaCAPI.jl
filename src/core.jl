@@ -131,7 +131,7 @@ end
     f(arg1, arg2)
 end
 
-@noinline function _barrier_call_f_a3(f, arg1, args2, arg3)
+@noinline function _barrier_call_f_a3(f, arg1, arg2, arg3)
     @nospecialize f, arg1, arg2, arg3
     f(arg1, arg2, arg3)
 end
