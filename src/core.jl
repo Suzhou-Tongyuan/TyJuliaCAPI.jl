@@ -51,7 +51,8 @@ end
     isempty(error_messages) && return false
     kindOut == C_NULL && return false
     errMsgOut == C_NULL && return false
-    kind, msg = popfirst!(error_messages)
+    # 后进先出，保证总是获取到最新的错误消息
+    kind, msg = pop!(error_messages)
     msgNBytes = ncodeunits(msg)
     errMsgOut.len < msgNBytes && return false
 
