@@ -381,6 +381,18 @@ function JLGetUInt8(out::Ptr{UInt8}, value::JV, doCast::Bool)::ErrorCode
     end
 end
 
+function JLGetUInt16(out::Ptr{UInt16}, value::JV, doCast::Bool)::ErrorCode
+    try
+        value′ = JV_LOAD(value)
+        v = doCast ? convert(UInt16, value′) : (value′::UInt16)
+        unsafe_store!(out, v)
+        return OK
+    catch e
+        @produce_error!(e)
+        return ERROR
+    end
+end
+
 function JLGetUInt32(out::Ptr{UInt32}, value::JV, doCast::Bool)::ErrorCode
     try
         value′ = JV_LOAD(value)
@@ -429,6 +441,30 @@ function JLGetInt64(out::Ptr{Int64}, value::JV, doCast::Bool)::ErrorCode
     end
 end
 
+function JLGetInt16(out::Ptr{Int16}, value::JV, doCast::Bool)::ErrorCode
+    try
+        value′ = JV_LOAD(value)
+        v = doCast ? convert(Int16, value′) : (value′::Int16)
+        unsafe_store!(out, v)
+        return OK
+    catch e
+        @produce_error!(e)
+        return ERROR
+    end
+end
+
+function JLGetInt8(out::Ptr{Int8}, value::JV, doCast::Bool)::ErrorCode
+    try
+        value′ = JV_LOAD(value)
+        v = doCast ? convert(Int8, value′) : (value′::Int8)
+        unsafe_store!(out, v)
+        return OK
+    catch e
+        @produce_error!(e)
+        return ERROR
+    end
+end
+
 function JLGetSingle(out::Ptr{Float32}, value::JV, doCast::Bool)::ErrorCode
     try
         value′ = JV_LOAD(value)
@@ -457,6 +493,18 @@ function JLGetComplexF64(out::Ptr{ComplexF64}, value::JV, doCast::Bool)::ErrorCo
     try
         value′ = JV_LOAD(value)
         v = doCast ? convert(ComplexF64, value′) : (value′::ComplexF64)
+        unsafe_store!(out, v)
+        return OK
+    catch e
+        @produce_error!(e)
+        return ERROR
+    end
+end
+
+function JLGetComplexF32(out::Ptr{ComplexF32}, value::JV, doCast::Bool)::ErrorCode
+    try
+        value′ = JV_LOAD(value)
+        v = doCast ? convert(ComplexF32, value′) : (value′::ComplexF32)
         unsafe_store!(out, v)
         return OK
     catch e
@@ -516,11 +564,17 @@ function _ToJLNumber(out::Ptr{JV}, value::Number)::ErrorCode
 end
 
 ToJLInt64(out::Ptr{JV}, value::Int64)::ErrorCode = _ToJLNumber(out, value)
+ToJLInt32(out::Ptr{JV}, value::Int32)::ErrorCode = _ToJLNumber(out, value)
+ToJLInt16(out::Ptr{JV}, value::Int16)::ErrorCode = _ToJLNumber(out, value)
+ToJLInt8(out::Ptr{JV}, value::Int8)::ErrorCode = _ToJLNumber(out, value)
 ToJLUInt64(out::Ptr{JV}, value::UInt64)::ErrorCode = _ToJLNumber(out, value)
 ToJLUInt32(out::Ptr{JV}, value::UInt32)::ErrorCode = _ToJLNumber(out, value)
+ToJLUInt16(out::Ptr{JV}, value::UInt16)::ErrorCode = _ToJLNumber(out, value)
 ToJLUInt8(out::Ptr{JV}, value::UInt8)::ErrorCode = _ToJLNumber(out, value)
 ToJLFloat64(out::Ptr{JV}, value::Float64)::ErrorCode = _ToJLNumber(out, value)
+ToJLFloat32(out::Ptr{JV}, value::Float32)::ErrorCode = _ToJLNumber(out, value)
 ToJLComplexF64(out::Ptr{JV}, value::ComplexF64)::ErrorCode = _ToJLNumber(out, value)
+ToJLComplexF32(out::Ptr{JV}, value::ComplexF32)::ErrorCode = _ToJLNumber(out, value)
 ToJLBool(out::Ptr{JV}, value::Bool)::ErrorCode = _ToJLNumber(out, value)
 
 function JVToJSym(out::Ptr{JSym}, value::JV)::ErrorCode
@@ -635,12 +689,17 @@ end
 
 JLNew_U64Array(out::Ptr{JV}, dims::TyList{Int64})::ErrorCode = _JLNew_TArray(UInt64, out, dims)
 JLNew_U32Array(out::Ptr{JV}, dims::TyList{Int64})::ErrorCode = _JLNew_TArray(UInt32, out, dims)
+JLNew_U16Array(out::Ptr{JV}, dims::TyList{Int64})::ErrorCode = _JLNew_TArray(UInt16, out, dims)
 JLNew_U8Array(out::Ptr{JV}, dims::TyList{Int64})::ErrorCode = _JLNew_TArray(UInt8, out, dims)
 JLNew_I64Array(out::Ptr{JV}, dims::TyList{Int64})::ErrorCode = _JLNew_TArray(Int64, out, dims)
 JLNew_I32Array(out::Ptr{JV}, dims::TyList{Int64})::ErrorCode = _JLNew_TArray(Int32, out, dims)
+JLNew_I16Array(out::Ptr{JV}, dims::TyList{Int64})::ErrorCode = _JLNew_TArray(Int16, out, dims)
+JLNew_I8Array(out::Ptr{JV}, dims::TyList{Int64})::ErrorCode = _JLNew_TArray(Int8, out, dims)
 JLNew_BoolArray(out::Ptr{JV}, dims::TyList{Int64})::ErrorCode = _JLNew_TArray(Bool, out, dims)
 JLNew_ComplexF64Array(out::Ptr{JV}, dims::TyList{Int64})::ErrorCode = _JLNew_TArray(ComplexF64, out, dims)
+JLNew_ComplexF32Array(out::Ptr{JV}, dims::TyList{Int64})::ErrorCode = _JLNew_TArray(ComplexF32, out, dims)
 JLNew_F64Array(out::Ptr{JV}, dims::TyList{Int64})::ErrorCode = _JLNew_TArray(Float64, out, dims)
+JLNew_F32Array(out::Ptr{JV}, dims::TyList{Int64})::ErrorCode = _JLNew_TArray(Float32, out, dims)
 
 function JLNew_StringVector(out::Ptr{JV}, length::Int64)::ErrorCode
     try
@@ -671,6 +730,21 @@ function JLArray_Rank(out::Ptr{Int64}, self::JV)::ErrorCode
         a = JV_LOAD(self)
         n = @ccall jl_array_rank(a::Any)::Csize_t
         unsafe_store!(out, Int64(n))
+        return OK
+    catch e
+        @produce_error!(e)
+        return ERROR
+    end
+end
+
+# JV is like an unique_ptr,
+# when trying to shared it to another language,
+# we need to share it and allocate a new JV object in object pool.
+function JLShareObject(out::Ptr{JV}, self::JV)::ErrorCode
+    try
+        a = JV_LOAD(self)
+        a′ = JV_ALLOC(a)
+        unsafe_store!(out, a′)
         return OK
     catch e
         @produce_error!(e)

@@ -107,6 +107,11 @@ ErrorCode JLGetUInt8(/* out */uint8_t* out, JV value, bool8_t doCast) {
     return _fptr_JLGetUInt8(out, value, doCast);
 }
 
+ErrorCode (*_fptr_JLGetUInt16)(/* out */uint16_t* out, JV value, bool8_t doCast);
+ErrorCode JLGetUInt16(/* out */uint16_t* out, JV value, bool8_t doCast) {
+    return _fptr_JLGetUInt16(out, value, doCast);
+}
+
 ErrorCode (*_fptr_JLGetUInt32)(/* out */uint32_t* out, JV value, bool8_t doCast);
 ErrorCode JLGetUInt32(/* out */uint32_t* out, JV value, bool8_t doCast) {
     return _fptr_JLGetUInt32(out, value, doCast);
@@ -115,6 +120,16 @@ ErrorCode JLGetUInt32(/* out */uint32_t* out, JV value, bool8_t doCast) {
 ErrorCode (*_fptr_JLGetUInt64)(/* out */uint64_t* out, JV value, bool8_t doCast);
 ErrorCode JLGetUInt64(/* out */uint64_t* out, JV value, bool8_t doCast) {
     return _fptr_JLGetUInt64(out, value, doCast);
+}
+
+ErrorCode (*_fptr_JLGetInt8)(/* out */int8_t* out, JV value, bool8_t doCast);
+ErrorCode JLGetInt8(/* out */int8_t* out, JV value, bool8_t doCast) {
+    return _fptr_JLGetInt8(out, value, doCast);
+}
+
+ErrorCode (*_fptr_JLGetInt16)(/* out */int16_t* out, JV value, bool8_t doCast);
+ErrorCode JLGetInt16(/* out */int16_t* out, JV value, bool8_t doCast) {
+    return _fptr_JLGetInt16(out, value, doCast);
 }
 
 ErrorCode (*_fptr_JLGetInt32)(/* out */int32_t* out, JV value, bool8_t doCast);
@@ -142,6 +157,11 @@ ErrorCode JLGetComplexF64(/* out */complex_t* out, JV value, bool8_t doCast) {
     return _fptr_JLGetComplexF64(out, value, doCast);
 }
 
+ErrorCode (*_fptr_JLGetComplexF32)(/* out */complex32_t* out, JV value, bool8_t doCast);
+ErrorCode JLGetComplexF32(/* out */complex32_t* out, JV value, bool8_t doCast) {
+    return _fptr_JLGetComplexF32(out, value, doCast);
+}
+
 ErrorCode (*_fptr_JLGetUTF8String)(SList<uint8_t> out, JV value);
 ErrorCode JLGetUTF8String(SList<uint8_t> out, JV value) {
     return _fptr_JLGetUTF8String(out, value);
@@ -162,6 +182,21 @@ ErrorCode ToJLInt64(/* out */JV* out, int64_t value) {
     return _fptr_ToJLInt64(out, value);
 }
 
+ErrorCode (*_fptr_ToJLInt32)(/* out */JV* out, int32_t value);
+ErrorCode ToJLInt32(/* out */JV* out, int32_t value) {
+    return _fptr_ToJLInt32(out, value);
+}
+
+ErrorCode (*_fptr_ToJLInt16)(/* out */JV* out, int16_t value);
+ErrorCode ToJLInt16(/* out */JV* out, int16_t value) {
+    return _fptr_ToJLInt16(out, value);
+}
+
+ErrorCode (*_fptr_ToJLInt8)(/* out */JV* out, int8_t value);
+ErrorCode ToJLInt8(/* out */JV* out, int8_t value) {
+    return _fptr_ToJLInt8(out, value);
+}
+
 ErrorCode (*_fptr_ToJLUInt64)(/* out */JV* out, uint64_t value);
 ErrorCode ToJLUInt64(/* out */JV* out, uint64_t value) {
     return _fptr_ToJLUInt64(out, value);
@@ -170,6 +205,11 @@ ErrorCode ToJLUInt64(/* out */JV* out, uint64_t value) {
 ErrorCode (*_fptr_ToJLUInt32)(/* out */JV* out, uint32_t value);
 ErrorCode ToJLUInt32(/* out */JV* out, uint32_t value) {
     return _fptr_ToJLUInt32(out, value);
+}
+
+ErrorCode (*_fptr_ToJLUInt16)(/* out */JV* out, uint16_t value);
+ErrorCode ToJLUInt16(/* out */JV* out, uint16_t value) {
+    return _fptr_ToJLUInt16(out, value);
 }
 
 ErrorCode (*_fptr_ToJLUInt8)(/* out */JV* out, uint8_t value);
@@ -192,9 +232,19 @@ ErrorCode ToJLFloat64(/* out */JV* out, double value) {
     return _fptr_ToJLFloat64(out, value);
 }
 
+ErrorCode (*_fptr_ToJLFloat32)(/* out */JV* out, float value);
+ErrorCode ToJLFloat32(/* out */JV* out, float value) {
+    return _fptr_ToJLFloat32(out, value);
+}
+
 ErrorCode (*_fptr_ToJLComplexF64)(/* out */JV* out, complex_t value);
 ErrorCode ToJLComplexF64(/* out */JV* out, complex_t value) {
     return _fptr_ToJLComplexF64(out, value);
+}
+
+ErrorCode (*_fptr_ToJLComplexF32)(/* out */JV* out, complex32_t value);
+ErrorCode ToJLComplexF32(/* out */JV* out, complex32_t value) {
+    return _fptr_ToJLComplexF32(out, value);
 }
 
 ErrorCode (*_fptr_JLStrVecWriteEltWithUTF8)(JV self, int64_t i, SList<uint8_t> value);
@@ -227,6 +277,11 @@ ErrorCode JLNew_F64Array(/* out */JV* out, SList<int64_t> dims) {
     return _fptr_JLNew_F64Array(out, dims);
 }
 
+ErrorCode (*_fptr_JLNew_F32Array)(/* out */JV* out, SList<int64_t> dims);
+ErrorCode JLNew_F32Array(/* out */JV* out, SList<int64_t> dims) {
+    return _fptr_JLNew_F32Array(out, dims);
+}
+
 ErrorCode (*_fptr_JLNew_U64Array)(/* out */JV* out, SList<int64_t> dims);
 ErrorCode JLNew_U64Array(/* out */JV* out, SList<int64_t> dims) {
     return _fptr_JLNew_U64Array(out, dims);
@@ -235,6 +290,11 @@ ErrorCode JLNew_U64Array(/* out */JV* out, SList<int64_t> dims) {
 ErrorCode (*_fptr_JLNew_U32Array)(/* out */JV* out, SList<int64_t> dims);
 ErrorCode JLNew_U32Array(/* out */JV* out, SList<int64_t> dims) {
     return _fptr_JLNew_U32Array(out, dims);
+}
+
+ErrorCode (*_fptr_JLNew_U16Array)(/* out */JV* out, SList<int64_t> dims);
+ErrorCode JLNew_U16Array(/* out */JV* out, SList<int64_t> dims) {
+    return _fptr_JLNew_U16Array(out, dims);
 }
 
 ErrorCode (*_fptr_JLNew_U8Array)(/* out */JV* out, SList<int64_t> dims);
@@ -247,6 +307,21 @@ ErrorCode JLNew_I64Array(/* out */JV* out, SList<int64_t> dims) {
     return _fptr_JLNew_I64Array(out, dims);
 }
 
+ErrorCode (*_fptr_JLNew_I32Array)(/* out */JV* out, SList<int64_t> dims);
+ErrorCode JLNew_I32Array(/* out */JV* out, SList<int64_t> dims) {
+    return _fptr_JLNew_I32Array(out, dims);
+}
+
+ErrorCode (*_fptr_JLNew_I16Array)(/* out */JV* out, SList<int64_t> dims);
+ErrorCode JLNew_I16Array(/* out */JV* out, SList<int64_t> dims) {
+    return _fptr_JLNew_I16Array(out, dims);
+}
+
+ErrorCode (*_fptr_JLNew_I8Array)(/* out */JV* out, SList<int64_t> dims);
+ErrorCode JLNew_I8Array(/* out */JV* out, SList<int64_t> dims) {
+    return _fptr_JLNew_I8Array(out, dims);
+}
+
 ErrorCode (*_fptr_JLNew_BoolArray)(/* out */JV* out, SList<int64_t> dims);
 ErrorCode JLNew_BoolArray(/* out */JV* out, SList<int64_t> dims) {
     return _fptr_JLNew_BoolArray(out, dims);
@@ -255,6 +330,11 @@ ErrorCode JLNew_BoolArray(/* out */JV* out, SList<int64_t> dims) {
 ErrorCode (*_fptr_JLNew_ComplexF64Array)(/* out */JV* out, SList<int64_t> dims);
 ErrorCode JLNew_ComplexF64Array(/* out */JV* out, SList<int64_t> dims) {
     return _fptr_JLNew_ComplexF64Array(out, dims);
+}
+
+ErrorCode (*_fptr_JLNew_ComplexF32Array)(/* out */JV* out, SList<int64_t> dims);
+ErrorCode JLNew_ComplexF32Array(/* out */JV* out, SList<int64_t> dims) {
+    return _fptr_JLNew_ComplexF32Array(out, dims);
 }
 
 ErrorCode (*_fptr_JLNew_StringVector)(/* out */JV* out, int64_t length);
@@ -295,6 +375,11 @@ ErrorCode JLError_FetchMsgStr(/* out */JSym* out, SList<uint8_t> msgBuffer) {
 uint8_t (*_fptr_JLCommonTag)(JV value);
 uint8_t JLCommonTag(JV value) {
     return _fptr_JLCommonTag(value);
+}
+
+ErrorCode (*_fptr_JLShareObject)(/* out */JV* out, JV value);
+ErrorCode JLShareObject(/* out */JV* out, JV value) {
+    return _fptr_JLShareObject(out, value);
 }
 
 typedef void (*_get_capi_t)(const char* name, void** funcref,  bool8_t* status_ref);
@@ -405,6 +490,11 @@ DLLEXPORT bool8_t library_init(_get_capi_t get_capi) {
         printf("Failed to load JLGetUInt8\n");
         return false;
     }
+    get_capi("JLGetUInt16", (void**)&_fptr_JLGetUInt16, &status);
+    if (!status) {
+        printf("Failed to load JLGetUInt16\n");
+        return false;
+    }
     get_capi("JLGetUInt32", (void**)&_fptr_JLGetUInt32, &status);
     if (!status) {
         printf("Failed to load JLGetUInt32\n");
@@ -413,6 +503,16 @@ DLLEXPORT bool8_t library_init(_get_capi_t get_capi) {
     get_capi("JLGetUInt64", (void**)&_fptr_JLGetUInt64, &status);
     if (!status) {
         printf("Failed to load JLGetUInt64\n");
+        return false;
+    }
+    get_capi("JLGetInt8", (void**)&_fptr_JLGetInt8, &status);
+    if (!status) {
+        printf("Failed to load JLGetInt8\n");
+        return false;
+    }
+    get_capi("JLGetInt16", (void**)&_fptr_JLGetInt16, &status);
+    if (!status) {
+        printf("Failed to load JLGetInt16\n");
         return false;
     }
     get_capi("JLGetInt32", (void**)&_fptr_JLGetInt32, &status);
@@ -440,6 +540,11 @@ DLLEXPORT bool8_t library_init(_get_capi_t get_capi) {
         printf("Failed to load JLGetComplexF64\n");
         return false;
     }
+    get_capi("JLGetComplexF32", (void**)&_fptr_JLGetComplexF32, &status);
+    if (!status) {
+        printf("Failed to load JLGetComplexF32\n");
+        return false;
+    }
     get_capi("JLGetUTF8String", (void**)&_fptr_JLGetUTF8String, &status);
     if (!status) {
         printf("Failed to load JLGetUTF8String\n");
@@ -460,6 +565,21 @@ DLLEXPORT bool8_t library_init(_get_capi_t get_capi) {
         printf("Failed to load ToJLInt64\n");
         return false;
     }
+    get_capi("ToJLInt32", (void**)&_fptr_ToJLInt32, &status);
+    if (!status) {
+        printf("Failed to load ToJLInt32\n");
+        return false;
+    }
+    get_capi("ToJLInt16", (void**)&_fptr_ToJLInt16, &status);
+    if (!status) {
+        printf("Failed to load ToJLInt16\n");
+        return false;
+    }
+    get_capi("ToJLInt8", (void**)&_fptr_ToJLInt8, &status);
+    if (!status) {
+        printf("Failed to load ToJLInt8\n");
+        return false;
+    }
     get_capi("ToJLUInt64", (void**)&_fptr_ToJLUInt64, &status);
     if (!status) {
         printf("Failed to load ToJLUInt64\n");
@@ -468,6 +588,11 @@ DLLEXPORT bool8_t library_init(_get_capi_t get_capi) {
     get_capi("ToJLUInt32", (void**)&_fptr_ToJLUInt32, &status);
     if (!status) {
         printf("Failed to load ToJLUInt32\n");
+        return false;
+    }
+    get_capi("ToJLUInt16", (void**)&_fptr_ToJLUInt16, &status);
+    if (!status) {
+        printf("Failed to load ToJLUInt16\n");
         return false;
     }
     get_capi("ToJLUInt8", (void**)&_fptr_ToJLUInt8, &status);
@@ -490,9 +615,19 @@ DLLEXPORT bool8_t library_init(_get_capi_t get_capi) {
         printf("Failed to load ToJLFloat64\n");
         return false;
     }
+    get_capi("ToJLFloat32", (void**)&_fptr_ToJLFloat32, &status);
+    if (!status) {
+        printf("Failed to load ToJLFloat32\n");
+        return false;
+    }
     get_capi("ToJLComplexF64", (void**)&_fptr_ToJLComplexF64, &status);
     if (!status) {
         printf("Failed to load ToJLComplexF64\n");
+        return false;
+    }
+    get_capi("ToJLComplexF32", (void**)&_fptr_ToJLComplexF32, &status);
+    if (!status) {
+        printf("Failed to load ToJLComplexF32\n");
         return false;
     }
     get_capi("JLStrVecWriteEltWithUTF8", (void**)&_fptr_JLStrVecWriteEltWithUTF8, &status);
@@ -525,6 +660,11 @@ DLLEXPORT bool8_t library_init(_get_capi_t get_capi) {
         printf("Failed to load JLNew_F64Array\n");
         return false;
     }
+    get_capi("JLNew_F32Array", (void**)&_fptr_JLNew_F32Array, &status);
+    if (!status) {
+        printf("Failed to load JLNew_F32Array\n");
+        return false;
+    }
     get_capi("JLNew_U64Array", (void**)&_fptr_JLNew_U64Array, &status);
     if (!status) {
         printf("Failed to load JLNew_U64Array\n");
@@ -533,6 +673,11 @@ DLLEXPORT bool8_t library_init(_get_capi_t get_capi) {
     get_capi("JLNew_U32Array", (void**)&_fptr_JLNew_U32Array, &status);
     if (!status) {
         printf("Failed to load JLNew_U32Array\n");
+        return false;
+    }
+    get_capi("JLNew_U16Array", (void**)&_fptr_JLNew_U16Array, &status);
+    if (!status) {
+        printf("Failed to load JLNew_U16Array\n");
         return false;
     }
     get_capi("JLNew_U8Array", (void**)&_fptr_JLNew_U8Array, &status);
@@ -545,6 +690,21 @@ DLLEXPORT bool8_t library_init(_get_capi_t get_capi) {
         printf("Failed to load JLNew_I64Array\n");
         return false;
     }
+    get_capi("JLNew_I32Array", (void**)&_fptr_JLNew_I32Array, &status);
+    if (!status) {
+        printf("Failed to load JLNew_I32Array\n");
+        return false;
+    }
+    get_capi("JLNew_I16Array", (void**)&_fptr_JLNew_I16Array, &status);
+    if (!status) {
+        printf("Failed to load JLNew_I16Array\n");
+        return false;
+    }
+    get_capi("JLNew_I8Array", (void**)&_fptr_JLNew_I8Array, &status);
+    if (!status) {
+        printf("Failed to load JLNew_I8Array\n");
+        return false;
+    }
     get_capi("JLNew_BoolArray", (void**)&_fptr_JLNew_BoolArray, &status);
     if (!status) {
         printf("Failed to load JLNew_BoolArray\n");
@@ -553,6 +713,11 @@ DLLEXPORT bool8_t library_init(_get_capi_t get_capi) {
     get_capi("JLNew_ComplexF64Array", (void**)&_fptr_JLNew_ComplexF64Array, &status);
     if (!status) {
         printf("Failed to load JLNew_ComplexF64Array\n");
+        return false;
+    }
+    get_capi("JLNew_ComplexF32Array", (void**)&_fptr_JLNew_ComplexF32Array, &status);
+    if (!status) {
+        printf("Failed to load JLNew_ComplexF32Array\n");
         return false;
     }
     get_capi("JLNew_StringVector", (void**)&_fptr_JLNew_StringVector, &status);
@@ -593,6 +758,11 @@ DLLEXPORT bool8_t library_init(_get_capi_t get_capi) {
     get_capi("JLCommonTag", (void**)&_fptr_JLCommonTag, &status);
     if (!status) {
         printf("Failed to load JLCommonTag\n");
+        return false;
+    }
+    get_capi("JLShareObject", (void**)&_fptr_JLShareObject, &status);
+    if (!status) {
+        printf("Failed to load JLShareObject\n");
         return false;
     }
     return true;

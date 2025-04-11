@@ -286,12 +286,18 @@ end
     asym = JV_ALLOC(:x)
     abool = JV_ALLOC(true)
     auint8 = JV_ALLOC(UInt8(2))
+    auint16 = JV_ALLOC(UInt16(2))
     auint32 = JV_ALLOC(UInt32(3))
     auint64 = JV_ALLOC(UInt64(4))
+    aint8 = JV_ALLOC(Int8(5))
+    aint16 = JV_ALLOC(Int16(5))
     aint32 = JV_ALLOC(Int32(5))
     aint64 = JV_ALLOC(Int64(6))
     afloat32 = JV_ALLOC(Float32(1))
     afloat64 = JV_ALLOC(Float64(2))
+    acomplexf64 = JV_ALLOC(ComplexF64(2.0, 3.0))
+    acomplexf32 = JV_ALLOC(ComplexF32(2.0, 3.0))
+
     astr = "Hello"
     astr′ = JV_ALLOC(astr)
 
@@ -314,6 +320,12 @@ end
     @test JLGetUInt8(pointer(out), auint32, true) == OK
     @test out[1] === UInt8(3)
 
+    out = UInt16[0]
+    @test JLGetUInt16(pointer(out), auint16, false) == OK
+    @test out[1] === UInt16(2)
+    @test JLGetUInt16(pointer(out), auint32, true) == OK
+    @test out[1] === UInt16(3)
+
     out = UInt32[0]
     @test JLGetUInt32(pointer(out), auint32, false) == OK
     @test out[1] === UInt32(3)
@@ -325,6 +337,18 @@ end
     @test out[1] === UInt64(4)
     @test JLGetUInt64(pointer(out), afloat64, true) == OK
     @test out[1] === UInt64(2)
+
+    out = Int8[0]
+    @test JLGetInt8(pointer(out), aint8, false) == OK
+    @test out[1] === Int8(5)
+    @test JLGetInt8(pointer(out), afloat32, true) == OK
+    @test out[1] === Int8(1)
+
+    out = Int16[0]
+    @test JLGetInt16(pointer(out), aint16, false) == OK
+    @test out[1] === Int16(5)
+    @test JLGetInt16(pointer(out), afloat32, true) == OK
+    @test out[1] === Int16(1)
 
     out = Int32[0]
     @test JLGetInt32(pointer(out), aint32, false) == OK
@@ -349,6 +373,14 @@ end
     @test out[1] === Float64(2)
     @test JLGetDouble(pointer(out), auint64, true) == OK
     @test out[1] === Float64(4)
+
+    out = ComplexF64[0]
+    @test JLGetComplexF64(pointer(out), acomplexf64, false) == OK
+    @test out[1] === ComplexF64(2, 3)
+
+    out = ComplexF32[0]
+    @test JLGetComplexF32(pointer(out), acomplexf32, false) == OK
+    @test out[1] === ComplexF32(2, 3)
 
     strbuff = Vector{UInt8}(undef, ncodeunits(astr))
 
@@ -396,35 +428,71 @@ end
 @testset "to julia" begin
     out = [JV()]
     x = "Hello"
-    GC.@preserve x begin
+    GC.@preserve x out begin
         @test ToJLString(pointer(out), TyList(ncodeunits(x), pointer(x))) == OK
     end
     @test JV_LOAD(out[1]) == x
 
-    GC.@preserve x begin
+    GC.@preserve out begin
+        @test ToJLInt8(pointer(out), Int8(1)) == OK
+    end
+    @test JV_LOAD(out[1]) === Int8(1)
+
+    GC.@preserve out begin
+        @test ToJLInt16(pointer(out), Int16(1)) == OK
+    end
+    @test JV_LOAD(out[1]) === Int16(1)
+
+    GC.@preserve out begin
+        @test ToJLInt32(pointer(out), Int32(1)) == OK
+    end
+    @test JV_LOAD(out[1]) === Int32(1)
+
+    GC.@preserve out begin
         @test ToJLInt64(pointer(out), Int64(1)) == OK
     end
-    @test JV_LOAD(out[1]) === 1
+    @test JV_LOAD(out[1]) === Int64(1)
 
-    GC.@preserve x begin
+    GC.@preserve out begin
         @test ToJLUInt64(pointer(out), UInt64(1)) == OK
     end
     @test JV_LOAD(out[1]) === UInt64(1)
 
-    GC.@preserve x begin
+    GC.@preserve out begin
         @test ToJLUInt32(pointer(out), UInt32(1)) == OK
     end
     @test JV_LOAD(out[1]) === UInt32(1)
 
-    GC.@preserve x begin
+    GC.@preserve out begin
+        @test ToJLUInt16(pointer(out), UInt16(1)) == OK
+    end
+    @test JV_LOAD(out[1]) === UInt16(1)
+
+    GC.@preserve out begin
+        @test ToJLUInt8(pointer(out), UInt8(1)) == OK
+    end
+    @test JV_LOAD(out[1]) === UInt8(1)
+
+    GC.@preserve out begin
         @test ToJLFloat64(pointer(out), Cdouble(1)) == OK
     end
     @test JV_LOAD(out[1]) === Cdouble(1)
 
-    GC.@preserve x begin
+    GC.@preserve out begin
+        @test ToJLFloat32(pointer(out), Float32(1)) == OK
+    end
+    @test JV_LOAD(out[1]) === Float32(1)
+
+
+    GC.@preserve out begin
         @test ToJLComplexF64(pointer(out), ComplexF64(1)) == OK
     end
     @test JV_LOAD(out[1]) === ComplexF64(1)
+
+    GC.@preserve out begin
+        @test ToJLComplexF32(pointer(out), ComplexF32(1)) == OK
+    end
+    @test JV_LOAD(out[1]) === ComplexF32(1)
 
     out = [JSym()]
     s = "a12345"
@@ -501,5 +569,18 @@ end
 
     j_dict = JV_ALLOC(Dict())
     @test TyJuliaCAPI.JLCommonTag(j_dict) == TyJuliaCAPI.Tag_Unknown
+    JV_DEALLOC(j_dict)
+end
+
+@testset "shared object" begin
+    obj = Dict()
+    j_dict = JV_ALLOC(obj)
+    out = [JV()]
+    GC.@preserve out begin
+        @test TyJuliaCAPI.JLShareObject(pointer(out), j_dict) == OK
+    end
+    @test JV_LOAD(out[1]) === obj
+    @test out[1] != j_dict
+    JV_DEALLOC(out[1])
     JV_DEALLOC(j_dict)
 end

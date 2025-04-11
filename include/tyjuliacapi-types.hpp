@@ -1,6 +1,7 @@
 #ifndef TYJULIACAPI_TYPES_HPP
 #define TYJULIACAPI_TYPES_HPP
 
+#include <cmath>
 #include <stdint.h>
 #include <stdio.h>
 
@@ -37,6 +38,12 @@ struct complex_t
 {
     double re;
     double im;
+};
+
+struct complex32_t
+{
+    float re;
+    float im;
 };
 
 typedef int64_t JV;
