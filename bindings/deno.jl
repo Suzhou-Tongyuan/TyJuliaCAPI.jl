@@ -1,6 +1,8 @@
 to_denoc_type(x::Type{Out{A}}) where A = "buffer"
 to_denoc_type(x::Type{Ptr{A}}) where A = "buffer"
 to_denoc_type(x::Type{JV}) = "i64" # slot
+to_denoc_type(x::Type{Int8}) = "i8"
+to_denoc_type(x::Type{Int16}) = "i16"
 to_denoc_type(x::Type{Int32}) = "i32"
 to_denoc_type(x::Type{Float32}) = "f32"
 to_denoc_type(x::Type{Int64}) = "i64"
@@ -8,6 +10,7 @@ to_denoc_type(x::Type{Float64}) = "f64"
 to_denoc_type(x::Type{Bool}) = "u8"
 to_denoc_type(x::Type{Cvoid}) = "void"
 to_denoc_type(x::Type{JSym}) = "i64" # slot
+to_denoc_type(x::Type{UInt16}) = "u16"
 to_denoc_type(x::Type{UInt32}) = "u32"
 to_denoc_type(x::Type{UInt64}) = "u64"
 to_denoc_type(x::Type{UInt8}) = "u8"
@@ -24,6 +27,13 @@ to_denoc_type(x::Type{ComplexF64}) = Dict(
     "struct" => [
         "f64",
         "f64"
+    ]
+)
+
+to_denoc_type(x::Type{ComplexF32}) = Dict(
+    "struct" => [
+        "f32",
+        "f32"
     ]
 )
 

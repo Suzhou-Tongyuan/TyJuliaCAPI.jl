@@ -9,10 +9,11 @@ export JLEval, JLFreeFromMe, FetchJLErrorSize, FetchJLError
 export JLCall, JLDotCall, JSymToJV, JLTypeOf, JLCompare, JLArray_Size, JLArray_Rank
 
 export JLHasProperty, JLGetProperty, JLSetProperty, JLGetIndex, JLSetIndex
-export JLGetSymbol, JLGetBool, JLGetUInt8, JLGetUInt32, JLGetUInt64
-export JLGetInt32, JLGetInt64, JLGetSingle, JLGetDouble, JLGetUTF8String
+export JLGetSymbol, JLGetBool, JLGetUInt8, JLGetUInt16, JLGetUInt32, JLGetUInt64
+export JLGetInt8, JLGetInt16, JLGetInt32, JLGetInt64, JLGetSingle, JLGetDouble, JLGetUTF8String
+export JLGetComplexF32, JLGetComplexF64
 export JLGetArrayPointer, JSymFromString
-export ToJLString, ToJLInt64, ToJLUInt32, ToJLUInt64, ToJLFloat64, ToJLComplexF64
+export ToJLString, ToJLInt8, ToJLInt16, ToJLInt32, ToJLInt64, ToJLUInt8, ToJLUInt16, ToJLUInt32, ToJLUInt64, ToJLFloat64, ToJLFloat32, ToJLComplexF64, ToJLComplexF32
 export PopulateCAPI
 export TyJuliaCAPI_Base, TyJuliaCAPI_Object, TyJuliaCAPI_FromJ, TyJuliaCAPI_ToJ
 export JLError_EnableBackTraceMsg, JLError_DisableBackTraceMsg

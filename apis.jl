@@ -20,24 +20,34 @@ apis = [
     @signature JLGetSymbol(out::Out{JSym}, value::JV, doCast::Bool)::ErrorCode
     @signature JLGetBool(out::Out{Bool}, value::JV, doCast::Bool)::ErrorCode
     @signature JLGetUInt8(out::Out{UInt8}, value::JV, doCast::Bool)::ErrorCode
+    @signature JLGetUInt16(out::Out{UInt16}, value::JV, doCast::Bool)::ErrorCode
     @signature JLGetUInt32(out::Out{UInt32}, value::JV, doCast::Bool)::ErrorCode
     @signature JLGetUInt64(out::Out{UInt64}, value::JV, doCast::Bool)::ErrorCode
+    @signature JLGetInt8(out::Out{Int8}, value::JV, doCast::Bool)::ErrorCode
+    @signature JLGetInt16(out::Out{Int16}, value::JV, doCast::Bool)::ErrorCode
     @signature JLGetInt32(out::Out{Int32}, value::JV, doCast::Bool)::ErrorCode
     @signature JLGetInt64(out::Out{Int64}, value::JV, doCast::Bool)::ErrorCode
     @signature JLGetSingle(out::Out{Float32}, value::JV, doCast::Bool)::ErrorCode
     @signature JLGetDouble(out::Out{Float64}, value::JV, doCast::Bool)::ErrorCode
     @signature JLGetComplexF64(out::Out{ComplexF64}, value::JV, doCast::Bool)::ErrorCode
+    @signature JLGetComplexF32(out::Out{ComplexF32}, value::JV, doCast::Bool)::ErrorCode
     @signature JLGetUTF8String(out::TyList{NativeChar}, value::JV)::ErrorCode
     @signature JLGetArrayPointer(out::Out{Ptr{UInt8}}, len::Out{Int64}, value::JV)::ErrorCode
     @signature JSymFromString(out::Out{JSym}, value::TyList{NativeChar})::ErrorCode
     @signature ToJLInt64(out::Out{JV}, value::Int64)::ErrorCode
+    @signature ToJLInt32(out::Out{JV}, value::Int32)::ErrorCode
+    @signature ToJLInt16(out::Out{JV}, value::Int16)::ErrorCode
+    @signature ToJLInt8(out::Out{JV}, value::Int8)::ErrorCode
     @signature ToJLUInt64(out::Out{JV}, value::UInt64)::ErrorCode
     @signature ToJLUInt32(out::Out{JV}, value::UInt32)::ErrorCode
+    @signature ToJLUInt16(out::Out{JV}, value::UInt16)::ErrorCode
     @signature ToJLUInt8(out::Out{JV}, value::UInt8)::ErrorCode
     @signature ToJLString(out::Out{JV}, value::TyList{NativeChar})::ErrorCode
     @signature ToJLBool(out::Out{JV}, value::Bool)::ErrorCode
     @signature ToJLFloat64(out::Out{JV}, value::Float64)::ErrorCode
+    @signature ToJLFloat32(out::Out{JV}, value::Float32)::ErrorCode
     @signature ToJLComplexF64(out::Out{JV}, value::ComplexF64)::ErrorCode
+    @signature ToJLComplexF32(out::Out{JV}, value::ComplexF32)::ErrorCode
 
     @signature JLStrVecWriteEltWithUTF8(self::JV, i::Int64, value::TyList{NativeChar})::ErrorCode
     @signature JLStrVecGetEltNBytes(out::Out{Int64}, self::JV, i::Int64)::ErrorCode
@@ -47,12 +57,18 @@ apis = [
     @signature JLTypeFromIdent(out::Out{JV}, slot::Int64)::ErrorCode
 
     @signature JLNew_F64Array(out::Out{JV}, dims::TyList{Int64})::ErrorCode
+    @signature JLNew_F32Array(out::Out{JV}, dims::TyList{Int64})::ErrorCode
     @signature JLNew_U64Array(out::Out{JV}, dims::TyList{Int64})::ErrorCode
     @signature JLNew_U32Array(out::Out{JV}, dims::TyList{Int64})::ErrorCode
+    @signature JLNew_U16Array(out::Out{JV}, dims::TyList{Int64})::ErrorCode
     @signature JLNew_U8Array(out::Out{JV}, dims::TyList{Int64})::ErrorCode
     @signature JLNew_I64Array(out::Out{JV}, dims::TyList{Int64})::ErrorCode
+    @signature JLNew_I32Array(out::Out{JV}, dims::TyList{Int64})::ErrorCode
+    @signature JLNew_I16Array(out::Out{JV}, dims::TyList{Int64})::ErrorCode
+    @signature JLNew_I8Array(out::Out{JV}, dims::TyList{Int64})::ErrorCode
     @signature JLNew_BoolArray(out::Out{JV}, dims::TyList{Int64})::ErrorCode
     @signature JLNew_ComplexF64Array(out::Out{JV}, dims::TyList{Int64})::ErrorCode
+    @signature JLNew_ComplexF32Array(out::Out{JV}, dims::TyList{Int64})::ErrorCode
     @signature JLNew_StringVector(out::Out{JV}, length::Int64)::ErrorCode
 
     @signature JLArray_Size(out::Out{Int64}, self::JV, i::Int64)::ErrorCode
@@ -65,4 +81,5 @@ apis = [
     @signature JLError_FetchMsgStr(out::Out{JSym}, msgBuffer::TyList{NativeChar})::ErrorCode
 
     @signature JLCommonTag(value::JV)::UInt8
+    @signature JLNewOwner(out::Out{JV}, value::JV)::ErrorCode
 ]

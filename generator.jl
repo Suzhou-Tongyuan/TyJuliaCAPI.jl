@@ -134,6 +134,7 @@ cs_binding_path = get(ENV, "CS_BINDING", "")
 cpp_binding_dir = get(ENV, "CPP_BINDING_DIR", "")
 deno_binding_path = get(ENV, "DENO_BINDING", "")
 py_binding_path = get(ENV, "PY_BINDING", "")
+rust_binding_path = get(ENV, "RUST_BINDING", "")
 
 if !isempty(cs_binding_path)
     include("bindings/csharp.jl")
@@ -183,6 +184,16 @@ if !isempty(py_binding_path)
     open(py_binding_path, "w") do io
         println(io, "# This file is generated. Do not modify it directly.")
         for each in gen_py_api_binding_struct()
+            println(io, each)
+        end
+    end
+end
+
+if !isempty(rust_binding_path)
+    include("bindings/rust.jl")
+
+    open(rust_binding_path, "w") do io
+        for each in gen_rs_api_binding_struct()
             println(io, each)
         end
     end

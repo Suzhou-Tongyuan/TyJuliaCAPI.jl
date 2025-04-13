@@ -149,6 +149,13 @@ function get_capi(name::Cstring, fptr_ref::Ptr{Ptr{Cvoid}}, status_ref::Ptr{Bool
             unsafe_store!(status_ref, true)
             return
         end
+        if jname == "JLGetUInt16"
+            unsafe_store!(
+                fptr_ref,
+                @cfunction(JLGetUInt16, ErrorCode, (Ptr{UInt16}, JV, Bool)))
+            unsafe_store!(status_ref, true)
+            return
+        end
         if jname == "JLGetUInt32"
             unsafe_store!(
                 fptr_ref,
@@ -160,6 +167,20 @@ function get_capi(name::Cstring, fptr_ref::Ptr{Ptr{Cvoid}}, status_ref::Ptr{Bool
             unsafe_store!(
                 fptr_ref,
                 @cfunction(JLGetUInt64, ErrorCode, (Ptr{UInt64}, JV, Bool)))
+            unsafe_store!(status_ref, true)
+            return
+        end
+        if jname == "JLGetInt8"
+            unsafe_store!(
+                fptr_ref,
+                @cfunction(JLGetInt8, ErrorCode, (Ptr{Int8}, JV, Bool)))
+            unsafe_store!(status_ref, true)
+            return
+        end
+        if jname == "JLGetInt16"
+            unsafe_store!(
+                fptr_ref,
+                @cfunction(JLGetInt16, ErrorCode, (Ptr{Int16}, JV, Bool)))
             unsafe_store!(status_ref, true)
             return
         end
@@ -198,6 +219,13 @@ function get_capi(name::Cstring, fptr_ref::Ptr{Ptr{Cvoid}}, status_ref::Ptr{Bool
             unsafe_store!(status_ref, true)
             return
         end
+        if jname == "JLGetComplexF32"
+            unsafe_store!(
+                fptr_ref,
+                @cfunction(JLGetComplexF32, ErrorCode, (Ptr{ComplexF32}, JV, Bool)))
+            unsafe_store!(status_ref, true)
+            return
+        end
         if jname == "JLGetUTF8String"
             unsafe_store!(
                 fptr_ref,
@@ -226,6 +254,27 @@ function get_capi(name::Cstring, fptr_ref::Ptr{Ptr{Cvoid}}, status_ref::Ptr{Bool
             unsafe_store!(status_ref, true)
             return
         end
+        if jname == "ToJLInt32"
+            unsafe_store!(
+                fptr_ref,
+                @cfunction(ToJLInt32, ErrorCode, (Ptr{JV}, Int32)))
+            unsafe_store!(status_ref, true)
+            return
+        end
+        if jname == "ToJLInt16"
+            unsafe_store!(
+                fptr_ref,
+                @cfunction(ToJLInt16, ErrorCode, (Ptr{JV}, Int16)))
+            unsafe_store!(status_ref, true)
+            return
+        end
+        if jname == "ToJLInt8"
+            unsafe_store!(
+                fptr_ref,
+                @cfunction(ToJLInt8, ErrorCode, (Ptr{JV}, Int8)))
+            unsafe_store!(status_ref, true)
+            return
+        end
         if jname == "ToJLUInt64"
             unsafe_store!(
                 fptr_ref,
@@ -237,6 +286,13 @@ function get_capi(name::Cstring, fptr_ref::Ptr{Ptr{Cvoid}}, status_ref::Ptr{Bool
             unsafe_store!(
                 fptr_ref,
                 @cfunction(ToJLUInt32, ErrorCode, (Ptr{JV}, UInt32)))
+            unsafe_store!(status_ref, true)
+            return
+        end
+        if jname == "ToJLUInt16"
+            unsafe_store!(
+                fptr_ref,
+                @cfunction(ToJLUInt16, ErrorCode, (Ptr{JV}, UInt16)))
             unsafe_store!(status_ref, true)
             return
         end
@@ -268,10 +324,24 @@ function get_capi(name::Cstring, fptr_ref::Ptr{Ptr{Cvoid}}, status_ref::Ptr{Bool
             unsafe_store!(status_ref, true)
             return
         end
+        if jname == "ToJLFloat32"
+            unsafe_store!(
+                fptr_ref,
+                @cfunction(ToJLFloat32, ErrorCode, (Ptr{JV}, Float32)))
+            unsafe_store!(status_ref, true)
+            return
+        end
         if jname == "ToJLComplexF64"
             unsafe_store!(
                 fptr_ref,
                 @cfunction(ToJLComplexF64, ErrorCode, (Ptr{JV}, ComplexF64)))
+            unsafe_store!(status_ref, true)
+            return
+        end
+        if jname == "ToJLComplexF32"
+            unsafe_store!(
+                fptr_ref,
+                @cfunction(ToJLComplexF32, ErrorCode, (Ptr{JV}, ComplexF32)))
             unsafe_store!(status_ref, true)
             return
         end
@@ -317,6 +387,13 @@ function get_capi(name::Cstring, fptr_ref::Ptr{Ptr{Cvoid}}, status_ref::Ptr{Bool
             unsafe_store!(status_ref, true)
             return
         end
+        if jname == "JLNew_F32Array"
+            unsafe_store!(
+                fptr_ref,
+                @cfunction(JLNew_F32Array, ErrorCode, (Ptr{JV}, TyList{Int64})))
+            unsafe_store!(status_ref, true)
+            return
+        end
         if jname == "JLNew_U64Array"
             unsafe_store!(
                 fptr_ref,
@@ -328,6 +405,13 @@ function get_capi(name::Cstring, fptr_ref::Ptr{Ptr{Cvoid}}, status_ref::Ptr{Bool
             unsafe_store!(
                 fptr_ref,
                 @cfunction(JLNew_U32Array, ErrorCode, (Ptr{JV}, TyList{Int64})))
+            unsafe_store!(status_ref, true)
+            return
+        end
+        if jname == "JLNew_U16Array"
+            unsafe_store!(
+                fptr_ref,
+                @cfunction(JLNew_U16Array, ErrorCode, (Ptr{JV}, TyList{Int64})))
             unsafe_store!(status_ref, true)
             return
         end
@@ -345,6 +429,27 @@ function get_capi(name::Cstring, fptr_ref::Ptr{Ptr{Cvoid}}, status_ref::Ptr{Bool
             unsafe_store!(status_ref, true)
             return
         end
+        if jname == "JLNew_I32Array"
+            unsafe_store!(
+                fptr_ref,
+                @cfunction(JLNew_I32Array, ErrorCode, (Ptr{JV}, TyList{Int64})))
+            unsafe_store!(status_ref, true)
+            return
+        end
+        if jname == "JLNew_I16Array"
+            unsafe_store!(
+                fptr_ref,
+                @cfunction(JLNew_I16Array, ErrorCode, (Ptr{JV}, TyList{Int64})))
+            unsafe_store!(status_ref, true)
+            return
+        end
+        if jname == "JLNew_I8Array"
+            unsafe_store!(
+                fptr_ref,
+                @cfunction(JLNew_I8Array, ErrorCode, (Ptr{JV}, TyList{Int64})))
+            unsafe_store!(status_ref, true)
+            return
+        end
         if jname == "JLNew_BoolArray"
             unsafe_store!(
                 fptr_ref,
@@ -356,6 +461,13 @@ function get_capi(name::Cstring, fptr_ref::Ptr{Ptr{Cvoid}}, status_ref::Ptr{Bool
             unsafe_store!(
                 fptr_ref,
                 @cfunction(JLNew_ComplexF64Array, ErrorCode, (Ptr{JV}, TyList{Int64})))
+            unsafe_store!(status_ref, true)
+            return
+        end
+        if jname == "JLNew_ComplexF32Array"
+            unsafe_store!(
+                fptr_ref,
+                @cfunction(JLNew_ComplexF32Array, ErrorCode, (Ptr{JV}, TyList{Int64})))
             unsafe_store!(status_ref, true)
             return
         end
@@ -412,6 +524,13 @@ function get_capi(name::Cstring, fptr_ref::Ptr{Ptr{Cvoid}}, status_ref::Ptr{Bool
             unsafe_store!(
                 fptr_ref,
                 @cfunction(JLCommonTag, UInt8, (JV,)))
+            unsafe_store!(status_ref, true)
+            return
+        end
+        if jname == "JLNewOwner"
+            unsafe_store!(
+                fptr_ref,
+                @cfunction(JLNewOwner, ErrorCode, (Ptr{JV}, JV)))
             unsafe_store!(status_ref, true)
             return
         end
