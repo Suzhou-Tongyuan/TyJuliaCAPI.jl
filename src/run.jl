@@ -43,8 +43,12 @@
         @test FetchJLError(
             pointer(refSym), TyList(length(errMsgVec), pointer(errMsgVec))
         ) == OK
-        @test JSym_LOAD(refSym[1]) == :ErrorException
-        @test String(errMsgVec) == "syntax: incomplete: premature end of input"
+        if VERSION >= v"1.10.0"
+            @test JSym_LOAD(refSym[1]) == :ParseError
+        else
+            @test JSym_LOAD(refSym[1]) == :ErrorException
+            @test String(errMsgVec) == "syntax: incomplete: premature end of input"
+        end
     end
 
     s = """
@@ -577,7 +581,7 @@ end
     j_dict = JV_ALLOC(obj)
     out = [JV()]
     GC.@preserve out begin
-        @test TyJuliaCAPI.JLShareObject(pointer(out), j_dict) == OK
+        @test TyJuliaCAPI.JLNewOwner(pointer(out), j_dict) == OK
     end
     @test JV_LOAD(out[1]) === obj
     @test out[1] != j_dict

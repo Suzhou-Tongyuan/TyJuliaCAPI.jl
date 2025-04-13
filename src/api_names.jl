@@ -31,4 +31,4 @@ APINames =
  :JLArray_Rank, :JLError_EnableBackTraceMsg, 
  :JLError_HasBackTraceMsg, :JLError_FetchMsgSize, 
  :JLError_FetchMsgStr, :JLCommonTag, 
- :JLShareObject]
+ :JLNewOwner]

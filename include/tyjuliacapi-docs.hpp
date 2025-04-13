@@ -77,5 +77,5 @@ uint8_t JLError_HasBackTraceMsg();
 ErrorCode JLError_FetchMsgSize(/* out */int64_t* size);
 ErrorCode JLError_FetchMsgStr(/* out */JSym* out, SList<uint8_t> msgBuffer);
 uint8_t JLCommonTag(JV value);
-ErrorCode JLShareObject(/* out */JV* out, JV value);
+ErrorCode JLNewOwner(/* out */JV* out, JV value);
 

@@ -81,5 +81,5 @@ apis = [
     @signature JLError_FetchMsgStr(out::Out{JSym}, msgBuffer::TyList{NativeChar})::ErrorCode
 
     @signature JLCommonTag(value::JV)::UInt8
-    @signature JLShareObject(out::Out{JV}, value::JV)::ErrorCode
+    @signature JLNewOwner(out::Out{JV}, value::JV)::ErrorCode
 ]

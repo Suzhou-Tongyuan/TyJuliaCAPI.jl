@@ -740,7 +740,7 @@ end
 # JV is like an unique_ptr,
 # when trying to shared it to another language,
 # we need to share it and allocate a new JV object in object pool.
-function JLShareObject(out::Ptr{JV}, self::JV)::ErrorCode
+function JLNewOwner(out::Ptr{JV}, self::JV)::ErrorCode
     try
         a = JV_LOAD(self)
         a′ = JV_ALLOC(a)

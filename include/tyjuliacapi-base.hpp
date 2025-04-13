@@ -377,9 +377,9 @@ uint8_t JLCommonTag(JV value) {
     return _fptr_JLCommonTag(value);
 }
 
-ErrorCode (*_fptr_JLShareObject)(/* out */JV* out, JV value);
-ErrorCode JLShareObject(/* out */JV* out, JV value) {
-    return _fptr_JLShareObject(out, value);
+ErrorCode (*_fptr_JLNewOwner)(/* out */JV* out, JV value);
+ErrorCode JLNewOwner(/* out */JV* out, JV value) {
+    return _fptr_JLNewOwner(out, value);
 }
 
 typedef void (*_get_capi_t)(const char* name, void** funcref,  bool8_t* status_ref);
@@ -760,9 +760,9 @@ DLLEXPORT bool8_t library_init(_get_capi_t get_capi) {
         printf("Failed to load JLCommonTag\n");
         return false;
     }
-    get_capi("JLShareObject", (void**)&_fptr_JLShareObject, &status);
+    get_capi("JLNewOwner", (void**)&_fptr_JLNewOwner, &status);
     if (!status) {
-        printf("Failed to load JLShareObject\n");
+        printf("Failed to load JLNewOwner\n");
         return false;
     }
     return true;

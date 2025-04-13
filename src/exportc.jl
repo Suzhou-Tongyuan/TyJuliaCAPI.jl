@@ -527,10 +527,10 @@ function get_capi(name::Cstring, fptr_ref::Ptr{Ptr{Cvoid}}, status_ref::Ptr{Bool
             unsafe_store!(status_ref, true)
             return
         end
-        if jname == "JLShareObject"
+        if jname == "JLNewOwner"
             unsafe_store!(
                 fptr_ref,
-                @cfunction(JLShareObject, ErrorCode, (Ptr{JV}, JV)))
+                @cfunction(JLNewOwner, ErrorCode, (Ptr{JV}, JV)))
             unsafe_store!(status_ref, true)
             return
         end
