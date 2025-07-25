@@ -40,7 +40,7 @@ end
 
 @noinline function first_error_size(sizeOut::Ptr{Int64})
     isempty(error_messages) && return false
-    kind, s = error_messages[1]
+    kind, s = error_messages[end]
     if sizeOut != C_NULL
         unsafe_store!(sizeOut, Int64(ncodeunits(s)))
     end
