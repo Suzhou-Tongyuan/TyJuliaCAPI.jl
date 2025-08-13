@@ -382,6 +382,11 @@ ErrorCode JLNewOwner(/* out */JV* out, JV value) {
     return _fptr_JLNewOwner(out, value);
 }
 
+ErrorCode (*_fptr_JLNormalizeToDouble)(JV* jvOut, uint8_t** dataOut, int64_t* lenOut, bool8_t* iscomplex, JV value);
+ErrorCode JLNormalizeToDouble(JV* jvOut, uint8_t** dataOut, int64_t* lenOut, bool8_t* iscomplex, JV value) {
+    return _fptr_JLNormalizeToDouble(jvOut, dataOut, lenOut, iscomplex, value);
+}
+
 typedef void (*_get_capi_t)(const char* name, void** funcref,  bool8_t* status_ref);
 DLLEXPORT bool8_t library_init(_get_capi_t get_capi) {
     bool8_t status;
@@ -763,6 +768,11 @@ DLLEXPORT bool8_t library_init(_get_capi_t get_capi) {
     get_capi("JLNewOwner", (void**)&_fptr_JLNewOwner, &status);
     if (!status) {
         printf("Failed to load JLNewOwner\n");
+        return false;
+    }
+    get_capi("JLNormalizeToDouble", (void**)&_fptr_JLNormalizeToDouble, &status);
+    if (!status) {
+        printf("Failed to load JLNormalizeToDouble\n");
         return false;
     }
     return true;

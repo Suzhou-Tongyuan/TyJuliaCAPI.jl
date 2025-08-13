@@ -670,7 +670,7 @@ function _create_jl_array(::Type{T}, dims::TyList{Int64})::JV where {T}
         return JV_ALLOC(Array{T,3}(undef, dims[1], dims[2], dims[3]))
     else
         N = len_dims
-        JV_ALLOC(Array{T, N}(undef, ntuple(i->dims[i], N)))
+        JV_ALLOC(Array{T,N}(undef, ntuple(i -> dims[i], N)))
     end
 end
 
@@ -745,6 +745,55 @@ function JLNewOwner(out::Ptr{JV}, self::JV)::ErrorCode
         a = JV_LOAD(self)
         a′ = JV_ALLOC(a)
         unsafe_store!(out, a′)
+        return OK
+    catch e
+        @produce_error!(e)
+        return ERROR
+    end
+end
+
+@noinline function nomalize_to_double_array(x)
+    y = if x isa AbstractArray
+        if eltype(x) <: AbstractFloat
+            convert(Array{Float64}, x)
+        elseif eltype(x) <: Complex
+            convert(Array{ComplexF64}, x)
+        else
+            try
+                convert(Array{Float64}, x)
+            catch
+                x
+            end
+        end
+    elseif x  isa Complex
+        ComplexF64[convert(ComplexF64, x)]
+    elseif x isa Real
+        Float64[convert(Float64, x)]
+    else
+        try
+            Float64[convert(Float64, x)]
+        catch
+            x
+        end
+    end
+    return y
+end
+
+function JLNormalizeToDouble(jvOut::Ptr{JV}, dataOut::Ptr{Ptr{UInt8}}, lenOut::Ptr{Int64}, iscomplex::Ptr{Bool}, value::JV)
+    try
+        val_load = JV_LOAD(value)
+        is_complex = false
+        y = nomalize_to_double_array(val_load)
+        if !isa(y, Array{Float64}) && !isa(y, Array{ComplexF64})
+            error("TyJuliaCAPI.JLNormalizeToDouble: can not convert data to Array{Float64} or Array{ComplexF64}")
+        end
+        is_complex = eltype(y) <: Complex
+        (len, p) = _array_pointer_barrier(Base.inferencebarrier(y))
+        out = JV_ALLOC(y)
+        unsafe_store!(jvOut, out)
+        unsafe_store!(dataOut, p)
+        unsafe_store!(lenOut, len)
+        unsafe_store!(iscomplex, is_complex)
         return OK
     catch e
         @produce_error!(e)

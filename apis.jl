@@ -82,4 +82,5 @@ apis = [
 
     @signature JLCommonTag(value::JV)::UInt8
     @signature JLNewOwner(out::Out{JV}, value::JV)::ErrorCode
+    @signature JLNormalizeToDouble(jvOut::Ptr{TyJuliaCAPI.JV}, dataOut::Ptr{Ptr{UInt8}}, lenOut::Ptr{Int64}, iscomplex::Ptr{Bool}, value::TyJuliaCAPI.JV)::ErrorCode
 ]

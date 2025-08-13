@@ -78,4 +78,5 @@ ErrorCode JLError_FetchMsgSize(/* out */int64_t* size);
 ErrorCode JLError_FetchMsgStr(/* out */JSym* out, SList<uint8_t> msgBuffer);
 uint8_t JLCommonTag(JV value);
 ErrorCode JLNewOwner(/* out */JV* out, JV value);
+ErrorCode JLNormalizeToDouble(JV* jvOut, uint8_t** dataOut, int64_t* lenOut, bool8_t* iscomplex, JV value);
 
