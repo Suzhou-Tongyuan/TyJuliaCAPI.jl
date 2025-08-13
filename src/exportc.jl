@@ -534,7 +534,15 @@ function get_capi(name::Cstring, fptr_ref::Ptr{Ptr{Cvoid}}, status_ref::Ptr{Bool
             unsafe_store!(status_ref, true)
             return
         end
+        if jname == "JLNormalizeToDouble"
+            unsafe_store!(
+                fptr_ref,
+                @cfunction(JLNormalizeToDouble, ErrorCode, (Ptr{JV}, Ptr{Ptr{UInt8}}, Ptr{Int64}, Ptr{Bool}, JV)))
+            unsafe_store!(status_ref, true)
+            return
+        end
         unsafe_store!(status_ref, false)
+        return
     catch
         unsafe_store!(status_ref, false)
         return

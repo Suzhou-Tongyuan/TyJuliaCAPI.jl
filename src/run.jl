@@ -588,3 +588,33 @@ end
     JV_DEALLOC(out[1])
     JV_DEALLOC(j_dict)
 end
+
+@testset "JLNormalizeToDouble" begin
+    obj = rand(2, 3)
+    jv_obj = JV_ALLOC(obj)
+    out = [JV()]
+    out_ptr = [Ptr{UInt8}(0)]
+    out_len = Int[0]
+    is_complex = Bool[0]
+    GC.@preserve out out_ptr out_len is_complex begin
+        TyJuliaCAPI.JLNormalizeToDouble(pointer(out), pointer(out_ptr), pointer(out_len), pointer(is_complex), jv_obj)
+    end
+    v = unsafe_wrap(Array, reinterpret(Ptr{Float64}, out_ptr[1]), (2, 3); own=false)
+    @test v == obj
+    @test out_len[1] == 6
+    @test is_complex[1] == 0
+
+    obj = 2
+    jv_obj = JV_ALLOC(obj)
+    out = [JV()]
+    out_ptr = [Ptr{UInt8}(0)]
+    out_len = Int[0]
+    is_complex = Bool[0]
+    GC.@preserve out out_ptr out_len is_complex begin
+        TyJuliaCAPI.JLNormalizeToDouble(pointer(out), pointer(out_ptr), pointer(out_len), pointer(is_complex), jv_obj)
+    end
+    v = unsafe_wrap(Array, reinterpret(Ptr{Float64}, out_ptr[1]), (2, 3); own=false)
+    @test v[1] == 2.0
+    @test out_len[1] == 1
+    @test is_complex[1] == 0
+end
