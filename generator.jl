@@ -99,6 +99,7 @@ function gen_get_api(ch)
         put!(ch, "    " * "    " * each)
     end
     put!(ch, "        unsafe_store!(status_ref, false)")
+    put!(ch, "        return")
     put!(ch, "    catch")
     put!(ch, "        unsafe_store!(status_ref, false)")
     put!(ch, "        return")

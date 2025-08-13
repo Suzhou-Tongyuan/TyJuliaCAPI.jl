@@ -416,6 +416,7 @@ function get_capi(name::Cstring, fptr_ref::Ptr{Ptr{Cvoid}}, status_ref::Ptr{Bool
             return
         end
         unsafe_store!(status_ref, false)
+        return
     catch
         unsafe_store!(status_ref, false)
         return
