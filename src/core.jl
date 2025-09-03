@@ -753,28 +753,25 @@ function JLNewOwner(out::Ptr{JV}, self::JV)::ErrorCode
 end
 
 @noinline function nomalize_to_double_array(x)
+    if isa(x,  Array{Float64})
+        return x, false
+    elseif isa(x, Array{ComplexF64})
+        return x, true
+    elseif isa(x, Real)
+        return Float64[Float64(x)], false
+    elseif isa(x, Complex)
+        return ComplexF64[ComplexF64(x)], true
+    end
     y = if x isa AbstractArray
-        if eltype(x) <: AbstractFloat
-            convert(Array{Float64}, x)
+        if eltype(x) <: Real
+            (convert(Array{Float64}, x), false)
         elseif eltype(x) <: Complex
-            convert(Array{ComplexF64}, x)
+            (convert(Array{ComplexF64}, x), true)
         else
-            try
-                convert(Array{Float64}, x)
-            catch
-                x
-            end
+            (x, false)
         end
-    elseif x  isa Complex
-        ComplexF64[convert(ComplexF64, x)]
-    elseif x isa Real
-        Float64[convert(Float64, x)]
     else
-        try
-            Float64[convert(Float64, x)]
-        catch
-            x
-        end
+        (x, false)
     end
     return y
 end
@@ -782,14 +779,16 @@ end
 function JLNormalizeToDouble(jvOut::Ptr{JV}, dataOut::Ptr{Ptr{UInt8}}, lenOut::Ptr{Int64}, iscomplex::Ptr{Bool}, value::JV)
     try
         val_load = JV_LOAD(value)
-        is_complex = false
-        y = nomalize_to_double_array(val_load)
+        y, iscomplex = nomalize_to_double_array(val_load)
         if !isa(y, Array{Float64}) && !isa(y, Array{ComplexF64})
-            error("TyJuliaCAPI.JLNormalizeToDouble: can not convert data to Array{Float64} or Array{ComplexF64}")
+            error("TyJuliaCAPI.JLNormalizeToDouble: can not convert data with type $(typeof(y)) to Array{Float64} or Array{ComplexF64}")
         end
-        is_complex = eltype(y) <: Complex
         (len, p) = _array_pointer_barrier(Base.inferencebarrier(y))
-        out = JV_ALLOC(y)
+        out = if x === y # fast path if x and y is the same object 
+            JV(0)
+        else
+            JV_ALLOC(y)
+        end
         unsafe_store!(jvOut, out)
         unsafe_store!(dataOut, p)
         unsafe_store!(lenOut, len)
